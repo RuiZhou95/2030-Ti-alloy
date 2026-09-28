@@ -1,0 +1,5 @@
+historical_data: /path/to/historical_records.xlsx
+trial_data: /path/to/subsequent_trial_records.xlsx
+output_dir: outputs
+julia_bin: julia
+slurm_partition: normal
