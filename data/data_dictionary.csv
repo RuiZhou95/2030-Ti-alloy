@@ -1,0 +1,120 @@
+field,definition,unit,data_type,origin,missing_value
+sample_id,Stable sample identifier,,text,recorded,blank/NA
+data_source_type,Record source category,,categorical,recorded,blank/NA
+source_reference,Source record or reference identifier,,text,recorded,blank/NA
+doi_or_url,Persistent identifier or source URL when available,,text,recorded,blank/NA
+material_system,Material family,,categorical,recorded,blank/NA
+sample_role,Role of the material record,,categorical,recorded,blank/NA
+alloy_or_coating_name,Titanium grade designation,,categorical,recorded,blank/NA
+composition_basis,Basis used to report composition,,categorical,recorded,blank/NA
+manufacturing_route,Recorded manufacturing route,,categorical,recorded,blank/NA
+test_temperature_c,test temperature c,degC,numeric,recorded,blank/NA
+test_standard,Mechanical-test standard,,text,recorded,blank/NA
+product_form,Recorded product form,,categorical,recorded,blank/NA
+Al_wt_pct,Al content,wt%,numeric,recorded,blank/NA
+Ti_wt_pct,Ti content,wt%,numeric,recorded,blank/NA
+Fe_wt_pct,Fe content,wt%,numeric,recorded,blank/NA
+Ni_wt_pct,Ni content,wt%,numeric,recorded,blank/NA
+Cr_wt_pct,Cr content,wt%,numeric,recorded,blank/NA
+Mn_wt_pct,Mn content,wt%,numeric,recorded,blank/NA
+Si_wt_pct,Si content,wt%,numeric,recorded,blank/NA
+Cu_wt_pct,Cu content,wt%,numeric,recorded,blank/NA
+Zn_wt_pct,Zn content,wt%,numeric,recorded,blank/NA
+Mg_wt_pct,Mg content,wt%,numeric,recorded,blank/NA
+Mo_wt_pct,Mo content,wt%,numeric,recorded,blank/NA
+V_wt_pct,V content,wt%,numeric,recorded,blank/NA
+Nb_wt_pct,Nb content,wt%,numeric,recorded,blank/NA
+Zr_wt_pct,Zr content,wt%,numeric,recorded,blank/NA
+Sn_wt_pct,Sn content,wt%,numeric,recorded,blank/NA
+Co_wt_pct,Co content,wt%,numeric,recorded,blank/NA
+C_wt_pct,C content,wt%,numeric,recorded,blank/NA
+N_wt_pct,N content,wt%,numeric,recorded,blank/NA
+O_wt_pct,O content,wt%,numeric,recorded,blank/NA
+B_wt_pct,B content,wt%,numeric,recorded,blank/NA
+P_wt_pct,P content,wt%,numeric,recorded,blank/NA
+S_wt_pct,S content,wt%,numeric,recorded,blank/NA
+Si,Si,as recorded,text or numeric,recorded,blank/NA
+H,H,as recorded,text or numeric,recorded,blank/NA
+melting_method,Recorded melting method,,categorical,recorded,blank/NA
+casting_method,Recorded casting method,,categorical,recorded,blank/NA
+homogenization_temp_c,homogenization temp c,degC,numeric,recorded,blank/NA
+homogenization_time_h,homogenization time h,h,numeric,recorded,blank/NA
+solution_temp_c,solution temp c,degC,numeric,recorded,blank/NA
+solution_time_h,solution time h,h,numeric,recorded,blank/NA
+aging_temp_c,aging temp c,degC,numeric,recorded,blank/NA
+aging_time_h,aging time h,h,numeric,recorded,blank/NA
+annealing_temp_c,annealing temp c,degC,numeric,recorded,blank/NA
+annealing_time_h,annealing time h,h,numeric,recorded,blank/NA
+rolling_temp_c,rolling temp c,degC,numeric,recorded,blank/NA
+rolling_reduction_pct,rolling reduction pct,%,numeric,recorded,blank/NA
+strain_rate_s_inv,strain rate s inv,s^-1,numeric,recorded,blank/NA
+cooling_method,Recorded cooling method,,categorical,recorded,blank/NA
+cooling_rate_c_per_min,cooling rate c per min,degC/min,numeric,recorded,blank/NA
+forging_temp_c,forging temp c,degC,numeric,recorded,blank/NA
+deformation_pass_count,deformation pass count,count,integer,recorded,blank/NA
+rolling_speed_m_per_min,rolling speed m per min,as recorded,text or numeric,recorded,blank/NA
+specimen_thickness_mm,specimen thickness mm,as recorded,text or numeric,recorded,blank/NA
+heat_treatment_route,Recorded heat-treatment route,,categorical,recorded,blank/NA
+phase_constituents,Recorded phase constituents,,text,recorded,blank/NA
+phase_fraction_main_pct,phase fraction main pct,%,numeric,recorded,blank/NA
+grain_size_um,grain size um,um,numeric,recorded,blank/NA
+precipitate_size_nm,precipitate size nm,nm,numeric,recorded,blank/NA
+precipitate_fraction_pct,precipitate fraction pct,%,numeric,recorded,blank/NA
+porosity_pct,porosity pct,%,numeric,recorded,blank/NA
+defect_distribution_note,Recorded defect-distribution note,,text,recorded,blank/NA
+texture_or_orientation_note,Recorded texture or orientation note,,text,recorded,blank/NA
+test_strain_rate_s_inv,test strain rate s inv,s^-1,numeric,recorded,blank/NA
+hydrostatic_pressure_mpa,hydrostatic pressure mpa,MPa,numeric,recorded,blank/NA
+salt_spray_concentration_pct,salt spray concentration pct,%,numeric,recorded,blank/NA
+salt_spray_time_h,salt spray time h,h,numeric,recorded,blank/NA
+immersion_medium,immersion medium,as recorded,text or numeric,recorded,blank/NA
+immersion_time_h,immersion time h,h,numeric,recorded,blank/NA
+flow_velocity_m_per_s,flow velocity m per s,m/s,numeric,recorded,blank/NA
+oxygen_content_mg_per_l,oxygen content mg per l,mg/L,numeric,recorded,blank/NA
+ph_value,ph value,as recorded,text or numeric,recorded,blank/NA
+humidity_pct,humidity pct,%,numeric,recorded,blank/NA
+sample_orientation,Tensile-specimen orientation,,categorical,recorded,blank/NA
+applied_stress_mpa,applied stress mpa,MPa,numeric,recorded,blank/NA
+stress_mode,stress mode,as recorded,text or numeric,recorded,blank/NA
+salinity_pct,salinity pct,%,numeric,recorded,blank/NA
+sea_area,sea area,as recorded,text or numeric,recorded,blank/NA
+exposure_depth_m,exposure depth m,as recorded,text or numeric,recorded,blank/NA
+static_pressure_hold_h,static pressure hold h,h,numeric,recorded,blank/NA
+dynamic_pressure_profile,dynamic pressure profile,as recorded,text or numeric,recorded,blank/NA
+dynamic_pressure_rate_mpa_per_min,dynamic pressure rate mpa per min,MPa/min,numeric,recorded,blank/NA
+dynamic_pressure_cycle_count,dynamic pressure cycle count,count,integer,recorded,blank/NA
+erosion_duration_h,erosion duration h,h,numeric,recorded,blank/NA
+elastic_modulus_gpa,elastic modulus gpa,GPa,numeric,recorded,blank/NA
+yield_strength_mpa,yield strength mpa,MPa,numeric,recorded,blank/NA
+ultimate_tensile_strength_mpa,ultimate tensile strength mpa,MPa,numeric,recorded,blank/NA
+elongation_pct,elongation pct,%,numeric,recorded,blank/NA
+hardness_hv,hardness hv,as recorded,text or numeric,recorded,blank/NA
+impact_energy_j,impact energy j,J,numeric,recorded,blank/NA
+corrosion_rate,corrosion rate,as recorded,text or numeric,recorded,blank/NA
+corrosion_potential_v,corrosion potential v,V,numeric,recorded,blank/NA
+pitting_potential_v,pitting potential v,V,numeric,recorded,blank/NA
+immersion_result,immersion result,as recorded,text or numeric,recorded,blank/NA
+service_life_year,service life year,as recorded,text or numeric,recorded,blank/NA
+pressure_resistance_result,pressure resistance result,as recorded,text or numeric,recorded,blank/NA
+erosion_result,erosion result,as recorded,text or numeric,recorded,blank/NA
+fracture_toughness_mpa_sqrtm,fracture toughness mpa sqrtm,MPa sqrt(m),numeric,recorded,blank/NA
+corrosion_current_density_ua_cm2,corrosion current density ua cm2,uA/cm2,numeric,recorded,blank/NA
+metal_coating_compatibility_result,metal coating compatibility result,as recorded,text or numeric,recorded,blank/NA
+substrate_material_name,substrate material name,as recorded,text or numeric,recorded,blank/NA
+surface_pretreatment,surface pretreatment,as recorded,text or numeric,recorded,blank/NA
+notes,notes,as recorded,text or numeric,recorded,blank/NA
+Ti_x_Al,Product of Ti and Al composition fields,wt%^2,derived numeric,derived,blank/NA
+Ti_x_V,Product of Ti and V composition fields,wt%^2,derived numeric,derived,blank/NA
+total_alloy_wt,Sum of non-Ti recorded alloying elements,wt%,derived numeric,derived,blank/NA
+replicate_group,Identifier shared by identical composition-processing inputs,,text,recorded,blank/NA
+role,Analysis-set role,,categorical,recorded,blank/NA
+Si_for_tbeta_wt_pct,Silicon composition field used in beta-transus estimate,wt%,derived numeric,derived,blank/NA
+Al_eq,Empirical aluminium equivalent,,derived numeric,derived,blank/NA
+Tbeta_est_c,Estimated beta-transus temperature,degC,derived numeric,derived,blank/NA
+delta_T_roll_c,Rolling temperature minus estimated beta-transus temperature,degC,derived numeric,derived,blank/NA
+beta_stabilizer_sum_wt_pct,Sum of recorded beta-stabilising elements,wt%,derived numeric,derived,blank/NA
+yield_ratio,Yield strength divided by ultimate tensile strength,dimensionless,derived numeric,derived,blank/NA
+hardening_reserve_mpa,Ultimate tensile strength minus yield strength,MPa,derived numeric,derived,blank/NA
+ys_el_index,Yield-strength times elongation index,MPa pct,derived numeric,derived,blank/NA
+uts_el_index,Ultimate-tensile-strength times elongation index,MPa pct,derived numeric,derived,blank/NA
+microstructure_class,Recorded microstructure class,,categorical,recorded,blank/NA

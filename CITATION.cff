@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this data or code, please cite the associated article and this software release."
+title: "Composition-processing-property modelling for titanium-alloy plate"
+type: software
+version: 1.0.0
+date-released: 2026-10-27
+authors:
+  - family-names: Zhou
+    given-names: Rui
+  - family-names: Zhang
+    given-names: Qifei
+  - family-names: Bao
+    given-names: Luyao
+  - family-names: Meng
+    given-names: Qingtong
+  - family-names: Cai
+    given-names: Meirong
+repository-code: "https://github.com/RuiZhou95/2030-Ti-alloy"
+license: MIT
+keywords:
+  - titanium alloy
+  - materials informatics
+  - machine learning
+  - strength-ductility relationship

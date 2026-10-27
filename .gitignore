@@ -29,5 +29,14 @@ __pycache__/
 *.py[cod]
 .ipynb_checkpoints/
 .pytest_cache/
+.serena/
 .venv/
 .env
+
+# Published FAIR data package.
+!data/
+!data/README.md
+!data/historical_78_material_states.csv
+!data/independent_trials_2.csv
+!data/data_dictionary.csv
+!data/SHA256SUMS

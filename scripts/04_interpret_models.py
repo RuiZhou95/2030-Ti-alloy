@@ -11,6 +11,10 @@ import warnings
 warnings.filterwarnings('ignore')
 
 import numpy as np
+# SHAP releases prior to 0.42 still reference NumPy's removed ``np.int`` alias.
+# Keep the analysis runnable on archived environments without changing results.
+if not hasattr(np, "int"):
+    np.int = int
 import pandas as pd
 import matplotlib
 matplotlib.use('Agg')

@@ -7,8 +7,9 @@
 5. Compute model feature contributions.
 6. Run and merge symbolic-regression searches.
 7. Compute observed nondominated fronts within each alloy grade.
-8. Apply frozen settings to the separate post-model trial file.
-9. Evaluate historical-only refit sensitivity without replacing primary results.
-10. Render manuscript figures from locally generated outputs.
+8. Fit the selected model settings on the 78 historical records and apply them
+   once to the separate post-model trial file.
+9. Render manuscript figures from the physically consistent data and the
+   corresponding model outputs.
 
 Generated files are written under `outputs/` and are excluded from Git.

@@ -22,6 +22,20 @@ def read_table(path:Path,sheet:str|None,header:int):
         return pd.read_excel(path,sheet_name=sheet or 0,header=header)
     return pd.read_csv(path)
 
+def validate_mechanical_targets(df:pd.DataFrame)->None:
+    """Fail closed when required mechanical targets are absent or nonphysical."""
+    missing_targets=df[TARGETS].isna().any(axis=1)
+    if missing_targets.any():
+        sample_ids=df.loc[missing_targets,"sample_id"].astype(str).tolist()
+        raise ValueError(f"Missing mechanical targets for samples: {sample_ids}")
+    inconsistent=df["yield_strength_mpa"]>df["ultimate_tensile_strength_mpa"]
+    if inconsistent.any():
+        sample_ids=df.loc[inconsistent,"sample_id"].astype(str).tolist()
+        raise ValueError(
+            "Physical consistency check failed: yield_strength_mpa exceeds "
+            f"ultimate_tensile_strength_mpa for samples {sample_ids}"
+        )
+
 def clean(df:pd.DataFrame)->pd.DataFrame:
     df=df.copy()
     missing=[c for c in META+TARGETS if c not in df]
@@ -33,6 +47,7 @@ def clean(df:pd.DataFrame)->pd.DataFrame:
     for c in CATEGORICAL:
         if c not in df:df[c]="unknown"
         df[c]=df[c].fillna("unknown").astype(str)
+    validate_mechanical_targets(df)
     hashes=pd.util.hash_pandas_object(df[COMPOSITION+PROCESS].fillna(-9.87654321e99),index=False)
     df["replicate_group"]=hashes.astype("uint64").astype(str)
     return df.reset_index(drop=True)
