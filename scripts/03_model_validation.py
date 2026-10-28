@@ -86,7 +86,9 @@ def main():
             r2,mae,rmse=metrics(y,pred)
             summaries.append(dict(target=target,model=name,train_r2=np.nan,test_r2=np.nan,
                                   cv_r2_mean=r2,cv_r2_std=np.nan,test_rmse=rmse,best_params="78-only grouped CV"))
-    pd.DataFrame(summaries).to_csv(DATA/"model_summary.csv",index=False)
+    # Keep the random-split six-model benchmark from ``02_train_models.py``
+    # intact; grouped validation is a distinct result with a distinct grain.
+    pd.DataFrame(summaries).to_csv(DATA/"grouped_model_summary.csv",index=False)
 
     # Validation ladder.
     ladder=[]

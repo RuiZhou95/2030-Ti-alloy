@@ -23,7 +23,7 @@ for TARGET in yield_strength_mpa ultimate_tensile_strength_mpa; do
 #SBATCH --partition=${PARTITION}
 #SBATCH --qos=${QOS}
 #SBATCH -n 8
-export JULIA_PKG_OFFLINE=true SR_POPULATIONS=${POP} SR_PARSIMONY=${PAR} SR_MAXSIZE=${MAX} SR_NITER=2000
+export JULIA_PKG_OFFLINE=true SR_POPULATIONS=${POP} SR_PARSIMONY=${PAR} SR_MAXSIZE=${MAX} SR_NITER=500 SR_CYCLES=100
 "${JULIA_BIN}" --project="${JULIA_PROJECT}" --threads=8 --startup-file=no "${SCRIPT}" "${TARGET}" "${DATA_DIR}" "${TAG}"
 EOF
     "$SBATCH_BIN" "$JOB"
@@ -41,7 +41,7 @@ cat > "$JOB" <<EOF
 #SBATCH --partition=${PARTITION}
 #SBATCH --qos=${QOS}
 #SBATCH -n 8
-export JULIA_PKG_OFFLINE=true SR_POPULATIONS=33 SR_PARSIMONY=0.0032 SR_MAXSIZE=12 SR_NITER=2000
+export JULIA_PKG_OFFLINE=true SR_POPULATIONS=33 SR_PARSIMONY=0.0032 SR_MAXSIZE=12 SR_NITER=500 SR_CYCLES=100
 "${JULIA_BIN}" --project="${JULIA_PROJECT}" --threads=8 --startup-file=no "${SCRIPT}" elongation_pct "${DATA_DIR}" el_single
 EOF
 "$SBATCH_BIN" "$JOB"

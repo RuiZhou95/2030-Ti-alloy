@@ -12,3 +12,6 @@
   missing; no automatic value swapping or silent correction is performed.
 - The released CSV files are the sole canonical inputs for the published
   analysis. Checksums are provided in `data/SHA256SUMS`.
+- Symbolic-regression search effort is controlled explicitly through
+  `SR_NITER` and `SR_CYCLES`; both values are written to each selected-formula
+  JSON file.

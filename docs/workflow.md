@@ -13,3 +13,6 @@
    corresponding model outputs.
 
 Generated files are written under `outputs/` and are excluded from Git.
+The random-split benchmark and grouped benchmark are written to
+`model_summary.csv` and `grouped_model_summary.csv`, respectively; neither file
+overwrites the other.

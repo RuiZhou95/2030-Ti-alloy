@@ -431,14 +431,14 @@ def fig5_symbolic_regression():
         parity_sources.append(pd.DataFrame({"target":target,"set":"test","measured":yte,"predicted":pte}))
         selected="Ridge" if target=="yield_strength_mpa" else "RandomForest"
         d=res[target][selected]
-        frozen_y=np.asarray(d["y_test"],dtype=float);frozen_pred=np.asarray(d["y_test_pred"],dtype=float)
-        assert np.allclose(yte,frozen_y),f"SR and frozen test rows differ for {target}"
+        model_y=np.asarray(d["y_test"],dtype=float);model_pred=np.asarray(d["y_test_pred"],dtype=float)
+        assert np.allclose(yte,model_y),f"SR and selected-model test rows differ for {target}"
         error_sets.extend([
             pd.DataFrame({"target":label.split()[0],"method":"SR","absolute_error":np.abs(pte-yte)}),
-            pd.DataFrame({"target":label.split()[0],"method":"Frozen","absolute_error":np.abs(frozen_pred-frozen_y)})])
+            pd.DataFrame({"target":label.split()[0],"method":"Selected model","absolute_error":np.abs(model_pred-model_y)})])
     axd=fig.add_subplot(gs[1,1]);panel(axd,"d");clean(axd)
     errors=pd.concat(error_sets,ignore_index=True)
-    combos=[("YS","SR"),("YS","Frozen"),("UTS","SR"),("UTS","Frozen")]
+    combos=[("YS","SR"),("YS","Selected model"),("UTS","SR"),("UTS","Selected model")]
     arrays=[errors[(errors.target==t)&(errors.method==m)].absolute_error.to_numpy() for t,m in combos]
     bp=axd.boxplot(arrays,positions=np.arange(4),widths=.52,patch_artist=True,showfliers=False,
                    medianprops=dict(color=DARK,lw=1),whiskerprops=dict(color=NEUTRAL),
@@ -624,21 +624,20 @@ def fig3():
 
 
 def fig4():
-    v=read("table3_trial_frozen_and_audited_predictions.csv"); t=read("independent_trials_2.csv"); m=read("trial_matched_controls.csv")
+    v=read("table3_trial_predictions.csv"); t=read("independent_trials_2.csv"); m=read("trial_matched_controls.csv")
     fig,axs=plt.subplots(2,2,figsize=(7.2,5.1));axs=axs.ravel()
     targets=[("yield_strength_mpa","YS (MPa)"),("ultimate_tensile_strength_mpa","UTS (MPa)"),("elongation_pct","EL (%)")]
     for i,(tar,label) in enumerate(targets):
         aa=axs[i];panel(aa,chr(ord('a')+i));clean(aa)
         q=v[v.target==tar].set_index("sample_id").loc[["Ti_9","Ti_20"]]
-        x=np.arange(2); w=.22
-        aa.bar(x-w,q.frozen_prediction,w,color=BLUE,label="Frozen")
-        aa.bar(x,q.measured,w,color=GOLD,label="Measured")
-        aa.bar(x+w,q.audited_refit_prediction,w,color=PALE,edgecolor=NEUTRAL,label="Audit sensitivity")
-        aa.errorbar(x-w,q.frozen_prediction,yerr=1.96*q.cv_rmse,fmt="none",ecolor=DARK,capsize=2,lw=.7)
+        x=np.arange(2); w=.32
+        aa.bar(x-w/2,q.selected_prediction,w,color=BLUE,label="Predicted")
+        aa.bar(x+w/2,q.measured,w,color=GOLD,label="Measured")
+        aa.errorbar(x-w/2,q.selected_prediction,yerr=1.96*q.cv_rmse,fmt="none",ecolor=DARK,capsize=2,lw=.7)
         aa.set_xticks(x,["Ti_9","Ti_20"]); aa.set_ylabel(label)
         panel_title(aa,{"yield_strength_mpa":"Yield strength","ultimate_tensile_strength_mpa":"Ultimate tensile strength","elongation_pct":"Elongation"}[tar])
-        ymax=max((q.frozen_prediction+1.96*q.cv_rmse).max(),q.measured.max(),q.audited_refit_prediction.max())
-        ymin=min((q.frozen_prediction-1.96*q.cv_rmse).min(),q.measured.min(),q.audited_refit_prediction.min())
+        ymax=max((q.selected_prediction+1.96*q.cv_rmse).max(),q.measured.max())
+        ymin=min((q.selected_prediction-1.96*q.cv_rmse).min(),q.measured.min())
         span=max(1.0,ymax-ymin);aa.set_ylim(max(0,ymin-.10*span),ymax+.22*span)
         for xx,val in zip(x,q.measured):
             aa.text(xx,val+.025*span,f"{val:.0f}" if tar!="elongation_pct" else f"{val:.0f}%",
@@ -657,7 +656,7 @@ def fig4():
     axe.legend(frameon=False,fontsize=5.5,ncol=2,loc="best")
     panel_title(axe,"Within-grade trial position")
     handles,labels=axs[0].get_legend_handles_labels()
-    fig.legend(handles,labels,frameon=False,ncol=3,loc="upper center",bbox_to_anchor=(.5,.985),
+    fig.legend(handles,labels,frameon=False,ncol=2,loc="upper center",bbox_to_anchor=(.5,.985),
                fontsize=5.8,columnspacing=1.1)
     fig.subplots_adjust(left=.10,right=.97,top=.89,bottom=.10,wspace=.34,hspace=.42)
     save_bundle(fig,"fig4_independent_trials",[("a-c",v),("d",pd.concat([
@@ -796,12 +795,12 @@ def fig6_v13():
 
 
 def si_figures():
-    h=read("historical_78_material_states.csv"); v=read("table3_trial_frozen_and_audited_predictions.csv")
-    # S1 audit and isolation
+    h=read("historical_78_material_states.csv"); v=read("table3_trial_predictions.csv")
+    # S1 record structure and isolation
     fig,axs=plt.subplots(1,3,figsize=(7.2,2.55));
-    counts=pd.DataFrame({"set":["Historical","Trials","TA1 audit"],"n":[78,2,41]})
-    axs[0].bar(counts["set"],counts.n,color=[BLUE,GOLD,RED]);axs[0].set_ylabel("Records");panel(axs[0],"a");clean(axs[0])
-    panel_title(axs[0],"Record and audit counts")
+    counts=pd.DataFrame({"set":["Historical records","Trial records","Condition groups"],"n":[len(h),2,h.replicate_group.nunique()]})
+    axs[0].bar(counts["set"],counts.n,color=[BLUE,GOLD,TEAL]);axs[0].set_ylabel("Count");panel(axs[0],"a");clean(axs[0]);plt.setp(axs[0].get_xticklabels(),rotation=22,rotation_mode="anchor",ha="right")
+    panel_title(axs[0],"Record structure")
     dup=h.groupby("replicate_group").size().value_counts().sort_index();axs[1].bar(dup.index.astype(str),dup.values,color=NEUTRAL);axs[1].set_xlabel("Records per replicate group");axs[1].set_ylabel("Groups");panel(axs[1],"b");clean(axs[1])
     panel_title(axs[1],"Repeated-input groups")
     ys=h.yield_strength_mpa;uts=h.ultimate_tensile_strength_mpa;axs[2].scatter(ys,uts,s=25,c=GRADE_COLORS.get("TA1"),alpha=.55);lo=min(ys.min(),uts.min());hi=max(ys.max(),uts.max());axs[2].plot([lo,hi],[lo,hi],ls="--",c=DARK,lw=.8);axs[2].set_xlabel("YS (MPa)");axs[2].set_ylabel("UTS (MPa)");panel(axs[2],"c");clean(axs[2])
@@ -811,7 +810,7 @@ def si_figures():
     save_bundle(fig,"figS1_data_audit",[("a",counts),("b",dup_frame),("c",h[["sample_id","yield_strength_mpa","ultimate_tensile_strength_mpa"]])],si=True)
 
     # S2 model benchmark
-    ms=read("model_summary.csv",data=True); fi=read("factor_increment_cv.csv")
+    ms=read("grouped_model_summary.csv",data=True); fi=read("factor_increment_cv.csv")
     fig,axs=plt.subplots(1,2,figsize=(7.2,3.0));
     piv=ms.pivot(index="model",columns="target",values="cv_r2_mean");piv.plot(kind="bar",ax=axs[0],color=[BLUE,TEAL,RED],width=.75);plt.setp(axs[0].get_xticklabels(), rotation_mode="anchor", ha="right");axs[0].set_ylabel("CV R²");axs[0].legend(frameon=False,fontsize=5.7);panel(axs[0],"a");clean(axs[0])
     panel_title(axs[0],"Six-model CV performance")
@@ -868,8 +867,8 @@ def si_figures():
     # S6 symbolic regression and local fronts
     pareto=read("historical_local_pareto.csv")
     fig,axs=plt.subplots(1,2,figsize=(7.2,3.0));
-    q=v.copy();q["sr_abs_error"]=abs(q.pred_SR-q.measured);q["frozen_abs_error"]=abs(q.frozen_prediction-q.measured)
-    target_short={"yield_strength_mpa":"YS","ultimate_tensile_strength_mpa":"UTS","elongation_pct":"EL"};x=np.arange(len(q));axs[0].bar(x-.18,q.sr_abs_error,.36,color=NEUTRAL,label="Symbolic regression");axs[0].bar(x+.18,q.frozen_abs_error,.36,color=BLUE,label="Frozen selected model");axs[0].set_xticks(x,[f"{a.replace('Ti_','T')}–{target_short.get(b,b)}" for a,b in zip(q.sample_id,q.target)]);plt.setp(axs[0].get_xticklabels(),rotation=35,rotation_mode="anchor",ha="right");axs[0].set_ylabel("Absolute error");axs[0].legend(frameon=False,fontsize=5.7);panel(axs[0],"a");clean(axs[0])
+    q=v.copy();q["sr_abs_error"]=abs(q.pred_SR-q.measured);q["model_abs_error"]=abs(q.selected_prediction-q.measured)
+    target_short={"yield_strength_mpa":"YS","ultimate_tensile_strength_mpa":"UTS","elongation_pct":"EL"};x=np.arange(len(q));axs[0].bar(x-.18,q.sr_abs_error,.36,color=NEUTRAL,label="Symbolic regression");axs[0].bar(x+.18,q.model_abs_error,.36,color=BLUE,label="Selected model");axs[0].set_xticks(x,[f"{a.replace('Ti_','T')}–{target_short.get(b,b)}" for a,b in zip(q.sample_id,q.target)]);plt.setp(axs[0].get_xticklabels(),rotation=35,rotation_mode="anchor",ha="right");axs[0].set_ylabel("Absolute error");axs[0].legend(frameon=False,fontsize=5.7);panel(axs[0],"a");clean(axs[0])
     panel_title(axs[0],"Trial prediction errors")
     for grade,gp in pareto.groupby("grade"):
         axs[1].plot(gp.x,gp.y,"o-",ms=3,lw=.8,label=grade,color=GRADE_COLORS.get(grade,NEUTRAL))
@@ -980,7 +979,7 @@ def write_contract():
 Accumulated composition–processing–property data support within-grade titanium plate modeling, TC4 process–microstructure analysis, and the subsequent Ti_9/Ti_20 single-test trials.
 
 ## Evidence hierarchy
-Observed measurements, model interpretation and prospective experiments occupy distinct layers. Frozen predictions remain unchanged, while audited refits provide a sensitivity comparison.
+Observed measurements, model interpretation and subsequent single-test trials occupy distinct evidence layers. All reported model outputs are generated from the released physically consistent historical dataset.
 
 ## Visual system
 7.2-inch journal width; Python/matplotlib; editable SVG text; PDF, 600-dpi TIFF and 600-dpi PNG; 5-point minimum final text. Neutral gray encodes accumulated test data, blue/teal material branches, muted red hypotheses, and gold subsequent trials.
